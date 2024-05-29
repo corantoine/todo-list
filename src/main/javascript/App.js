@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./styles/app.css"
-import {androidDelete} from 'react-icons-kit/ionicons/androidDelete'
+import { androidDelete } from 'react-icons-kit/ionicons/androidDelete'
 import { Icon } from 'react-icons-kit'
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
     // spread operator : eclate le tableau et le reconstruit dans une nouvelle instance de tableau
     const taskCopy = [...tasks];
 
-    
+
     /************************** 2. Manipulation sur la copie du state **************************/
     // ici on défini l'id en fonction de la date; ainsi aucun item ne peut avoir 2 id identiques
     const id = new Date().getTime();
@@ -49,6 +49,8 @@ function App() {
     /************************** 3. Modifier le state avec le setter **************************/
     // ici on modifie le state pour afficher l'ajout d'élément
     setTasks(taskCopy);
+    // setNewTask prend en compte l'input texte, donc on réinitialise son état à vide pour "vider" l'input
+    setNewTask("");
   }
 
   const handleChange = (e) => {
@@ -72,18 +74,18 @@ function App() {
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            {task.nom}<input type="checkbox"/> <button className="deleteButton" onClick={handleDelete} >X</button></li>
+            {task.nom}<input type="checkbox" /> <button className="deleteButton" onClick={handleDelete} >X</button></li>
         ))}
       </ul>
       <span className="form-container">
-      <form action="submit" onSubmit={handleSubmit}>
-        <input className="input" value={newTask}
-          type="text"
-          placeholder="Ajoutez une tache..."
-          onChange={handleChange} />
-        <button className="button">Ajouter</button> 
-        {/* <button>{androidDelete}</button> */}
-      </form>
+        <form action="submit" onSubmit={handleSubmit}>
+          <input className="input" value={newTask}
+            type="text"
+            placeholder="Ajoutez une tache..."
+            onChange={handleChange} />
+          <button className="button">Ajouter</button>
+          {/* <button>{androidDelete}</button> */}
+        </form>
       </span>
       <h2> Tâches terminées : </h2>
     </div>
