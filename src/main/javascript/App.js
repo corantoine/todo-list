@@ -16,7 +16,9 @@ function App() {
     { id: 8, nom: "Seulement la tâche active" },
     { id: 9, nom: "Seulement les tâches terminées." },
     { id: 10, nom: "Architecturer le projet" },
-    { id: 11, nom: "Ajouter bouton suppression" }
+    { id: 11, nom: "Ajouter bouton suppression" },
+    { id: 12, nom: "Header ?" },
+    { id: 13, nom: "Footer ?" }
 
   ])
 
@@ -28,14 +30,24 @@ function App() {
     // Empêcher le rechargement de la page au moment de la soumission du form
     e.preventDefault();
 
+    /************************** 1. Copie du state **************************/
     // copie du tableau task en utilisant le spread operator
     // spread operator : eclate le tableau et le reconstruit dans une nouvelle instance de tableau
     const taskCopy = [...tasks];
 
+    
+    /************************** 2. Manipulation sur la copie du state **************************/
+    // ici on défini l'id en fonction de la date; ainsi aucun item ne peut avoir 2 id identiques
     const id = new Date().getTime();
+    // ici on attribue la valeur `newTask` à nom
     const nom = newTask;
+
+    // ici on push le nouvel elem à la fin du tableau en lui attribuant un id et le nom saisi par l'utilisateur
     taskCopy.push({ id: id, nom: nom })
 
+
+    /************************** 3. Modifier le state avec le setter **************************/
+    // ici on modifie le state pour afficher l'ajout d'élément
     setTasks(taskCopy);
   }
 
@@ -44,8 +56,10 @@ function App() {
     setNewTask(e.target.value);
   }
 
-  const handleDelete = () => {
-    // alert('Supprimer')
+  // ici on passe l'id en paramètre de la fonction
+  const handleDelete = (id) => {
+    console.log('Supprimer')
+
 
 
   }
@@ -58,7 +72,7 @@ function App() {
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            {task.nom}<input type="checkbox" onClick={handleDelete} /></li>
+            {task.nom}<input type="checkbox"/> <button className="deleteButton" onClick={handleDelete} >X</button></li>
         ))}
       </ul>
       <span className="form-container">
