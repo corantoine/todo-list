@@ -12,7 +12,7 @@ h2 {
 
 
 
-ul{
+ul {
     font-family: sans-serif; 
     font-size: 20px;
     display: flex;
@@ -26,6 +26,16 @@ li {
     padding: 5px 10px 5px 10px;
     border-radius: 3px;
     text-align: justify;
+}
+
+.deleteButton {
+    background-color: rgb(253, 78, 78);
+    font-weight: bolder;
+}
+
+.deleteButton:hover{
+    color : white;
+    background-color: red;
 }
 
 form {
