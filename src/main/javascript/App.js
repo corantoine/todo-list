@@ -26,6 +26,7 @@ function App() {
 
 
   // comportement
+  /****************Soumission du formulaire****************/
   const handleSubmit = (e) => {
     // Empêcher le rechargement de la page au moment de la soumission du form
     e.preventDefault();
@@ -53,6 +54,9 @@ function App() {
     setNewTask("");
   }
 
+/****************** Ajout d'une nouvelle tache *****************/
+//Un événement onChange est déclenché lorsque des valeurs sont saisies dans l’entrée. 
+//Cela déclenche une fonction handleChange() , qui est utilisée pour définir un nouvel état pour l’entrée.
   const handleChange = (e) => {
     // const valueAfterChange = e.target.value;
     setNewTask(e.target.value);
