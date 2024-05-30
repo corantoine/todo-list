@@ -61,16 +61,16 @@ function App() {
   }
 
   // ici on passe l'id en paramètre de la fonction
-  const handleDelete = id => {
-    console.log('Supprimer')
+  const handleDelete = (id) => {
+    console.log('Supprimer : id n°' + id)
 
     const taskCopy = [...tasks];
 
     // ici on veut filtrer par id pour supprimer la tâche selectionnée
     // On garde toutes les tâches dont l'id est différent de celui sélectionné    
-    const taskCopyUpdated = taskCopy.filter(task => tasks.id !== id)
+    const taskCopyUpdated = taskCopy.filter(task => task.id !== id)
     setTasks(taskCopyUpdated)
-  
+
   }
 
   // render
@@ -81,7 +81,7 @@ function App() {
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
-            {task.nom}<input type="checkbox" /> <button className="deleteButton" onClick= {() => handleDelete(task.id)} >X</button></li>
+            {task.nom}<input type="checkbox" /> <button className="deleteButton" onClick={() => handleDelete(task.id)} >X</button></li>
         ))}
       </ul>
       <span className="form-container">
