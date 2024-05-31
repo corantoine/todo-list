@@ -21,6 +21,7 @@ function App() {
   ])
 
   const [newTask, setNewTask] = useState("");
+  const [taskCompleted, setTaskCompleted] = useState(false)
 
 
   // comportement
@@ -73,6 +74,13 @@ function App() {
 
   }
 
+  // Au clic dans la checkbox, je veux que mon texte soit barré.
+  // Nécessite une classe pour fonctionner
+  const handleCheck = () => {
+    console.log();
+    setTaskCompleted(!taskCompleted)
+  }
+
   // render
   return (
     <div>
@@ -80,8 +88,18 @@ function App() {
       <h2> Tâches à faire : </h2>
       <ul>
         {tasks.map((task) => (
-          <li key={task.id}>
-            {task.nom}<input type="checkbox" /> <button className="deleteButton" onClick={() => handleDelete(task.id)} >X</button></li>
+          <li key={task.id}
+          onClick={handleCheck}
+          >
+            {task.nom}
+            <input type="checkbox"
+            className={!true ? "completed-task" : "uncomplete-task"}
+            onClick={() => handleCheck()}  
+            /> 
+            <button 
+            className="deleteButton" 
+            onClick={() => handleDelete(task.id)}>X</button>
+            </li>
         ))}
       </ul>
       <span className="form-container">
@@ -91,7 +109,6 @@ function App() {
             placeholder="Ajoutez une tache..."
             onChange={handleChange} />
           <button className="button">Ajouter</button>
-          {/* <button>{androidDelete}</button> */}
         </form>
       </span>
       <h2> Tâches terminées : </h2>

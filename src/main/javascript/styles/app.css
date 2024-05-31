@@ -65,5 +65,8 @@ button:hover {
 .input:hover{
     border-radius: 10px;
     background-color: azure;
-    border-style: dotted;
+}
+
+.completed-task{
+    text-decoration: overline;
 }
