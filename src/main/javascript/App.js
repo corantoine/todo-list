@@ -1,69 +1,24 @@
 import { useState } from "react";
 import "./styles/app.css"
+import Task from "./components/Task"
+import TaskForm from "./components/TaskForm";
 
 function App() {
   // state
   const [tasks, setTasks] = useState([
-    { id: 1, nom: "Lire une liste de tâches." },
-    { id: 2, nom: "Ajouter une tâche en utilisant la souris ou le clavier." },
-    { id: 3, nom: "Marquer une tâche comme étant terminée, en utilisant la souris ou le clavier" },
-    { id: 4, nom: "Supprimer n'importe quelle tâche, en utilisant la souris ou le clavier." },
-    { id: 5, nom: "Modifier n'importe quelle tâche, en utilisant la souris ou le clavier." },
-    { id: 6, nom: "Afficher un sous-ensemble spécifique de tâches :" },
-    { id: 7, nom: "Toutes les tâches" },
-    { id: 8, nom: "Seulement la tâche active" },
-    { id: 9, nom: "Seulement les tâches terminées." },
-    { id: 10, nom: "Architecturer le projet" },
-    { id: 11, nom: "Ajouter bouton suppression" },
-    { id: 12, nom: "Header ?" },
-    { id: 13, nom: "Footer ?" }
-
+    { id: 1, nom: "Marquer une tâche comme étant terminée, en utilisant la souris ou le clavier", taskCompleted: false },
+    { id: 2, nom: "Modifier n'importe quelle tâche, en utilisant la souris ou le clavier.", taskCompleted: false },
+    { id: 3, nom: "Afficher un sous-ensemble spécifique de tâches :", taskCompleted: false },
+    { id: 4, nom: "Toutes les tâches", taskCompleted: false },
+    { id: 5, nom: "Seulement la tâche active", taskCompleted: false },
+    { id: 6, nom: "Seulement les tâches terminées.", taskCompleted: false },
   ])
 
-  const [newTask, setNewTask] = useState("");
-
+  // const [taskCompleted, setTaskCompleted] = useState(false);
 
   // comportement
-  /****************Soumission du formulaire****************/
-  const handleSubmit = (e) => {
-    // Empêcher le rechargement de la page au moment de la soumission du form
-    e.preventDefault();
-
-    /************************** 1. Copie du state **************************/
-    // copie du tableau task en utilisant le spread operator
-    // spread operator : eclate le tableau et le reconstruit dans une nouvelle instance de tableau
-    const taskCopy = [...tasks];
-
-
-    /************************** 2. Manipulation sur la copie du state **************************/
-    // ici on défini l'id en fonction de la date; ainsi aucun item ne peut avoir 2 id identiques
-    const id = new Date().getTime();
-    // ici on attribue la valeur `newTask` à nom
-    const nom = newTask;
-
-    // ici on push le nouvel elem à la fin du tableau en lui attribuant un id et le nom saisi par l'utilisateur
-    taskCopy.push({ id: id, nom: nom })
-
-
-    /************************** 3. Modifier le state avec le setter **************************/
-    // ici on modifie le state pour afficher l'ajout d'élément
-    setTasks(taskCopy);
-    // setNewTask prend en compte l'input texte, donc on réinitialise son état à vide pour "vider" l'input
-    setNewTask("");
-  }
-
-  /****************** Ajout d'une nouvelle tache *****************/
-  //Un événement onChange est déclenché lorsque des valeurs sont saisies dans l’entrée. 
-  //Cela déclenche une fonction handleChange() , qui est utilisée pour définir un nouvel état pour l’entrée.
-  const handleChange = (e) => {
-    // const valueAfterChange = e.target.value;
-    setNewTask(e.target.value);
-  }
-
-  // ici on passe l'id en paramètre de la fonction
   const handleDelete = (id) => {
-    console.log('Supprimer : id n°' + id)
-
+    // ici on passe l'id en paramètre de la fonction
     const taskCopy = [...tasks];
 
     // ici on veut filtrer par id pour supprimer la tâche selectionnée
@@ -73,6 +28,50 @@ function App() {
 
   }
 
+  // Au clic dans la checkbox, je veux que mon texte soit barré.
+  // Nécessite une classe pour fonctionner
+  const handleCheck = (id) => {
+
+    /************************** 1. Copie du state **************************/
+    //Ici on crée une copie du tableau tasks
+    var tasksCopy = [...tasks];
+
+    // /************************** 2. Manipulation sur la copie du state **************************/
+    //Ici on recherche la tâche correspondant à l'id fourni
+    var taskCopyUpdated = tasksCopy.find(task => task.id === id)
+    // On met à jour taskCopyUpdated afin d'inverser la valeur de la propriété taskCompleted
+    taskCopyUpdated = { ...taskCopyUpdated, taskCompleted: !taskCopyUpdated.taskCompleted }
+
+    
+    //Ici on cherche l'index de la tâche correspondant à l'id
+    const findTask = tasksCopy.findIndex(task => task.id === id)
+    
+    // Ici on remplace la tâche à l'index findTask par la tâche maj (taskCopyUpdated)
+    tasksCopy.splice(findTask, 1, taskCopyUpdated)
+
+    
+    
+    //Ici on filtre les valeurs pour ne garder que les valeurs qui remplissent la condition
+    // const tasksWithoutOldValue = tasksCopy.filter(task => task.id !== id)
+    // Spread operator fonctionne aussi MAIS il pousse la nouvelle valeur à la fin du tableau
+    // tasksCopy = [...tasksWithoutOldValue, taskCopyUpdated]  
+
+    // trouver et maj task dans le tableau
+    /************************** 3. Modifier le state avec le setter **************************/
+    setTasks(tasksCopy)
+  }
+
+  const handleAdd = (taskToAdd) => {
+    //1. Copie du state 
+    // copie du tableau task avec le spread operator
+    const taskCopy = [...tasks];
+    //2. Manipulation sur la copie du state 
+    taskCopy.push(taskToAdd);
+    //3. Modifier le state avec le setter
+    // ici on modifie le state pour afficher l'ajout d'élément
+    setTasks(taskCopy);
+  }
+
   // render
   return (
     <div>
@@ -80,19 +79,16 @@ function App() {
       <h2> Tâches à faire : </h2>
       <ul>
         {tasks.map((task) => (
-          <li key={task.id}>
-            {task.nom}<input type="checkbox" /> <button className="deleteButton" onClick={() => handleDelete(task.id)} >X</button></li>
+          <Task taskInfo={task}
+            onTaskDelete={handleDelete}
+            onCheck={handleCheck}
+            onTaskCompleted={task.taskCompleted}
+            key={task.id}
+          />
         ))}
       </ul>
       <span className="form-container">
-        <form action="submit" onSubmit={handleSubmit}>
-          <input className="input" value={newTask}
-            type="text"
-            placeholder="Ajoutez une tache..."
-            onChange={handleChange} />
-          <button className="button">Ajouter</button>
-          {/* <button>{androidDelete}</button> */}
-        </form>
+        <TaskForm handleAdd={handleAdd} />
       </span>
       <h2> Tâches terminées : </h2>
     </div>
