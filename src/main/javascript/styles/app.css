@@ -68,5 +68,5 @@ button:hover {
 }
 
 .completed-task{
-    text-decoration: overline;
+    text-decoration: line-through rgb(85, 85, 85);
 }
