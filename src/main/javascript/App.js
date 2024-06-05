@@ -12,7 +12,7 @@ function App() {
     { id: 4, nom: "Toutes les tâches", taskCompleted: false },
     { id: 5, nom: "Seulement la tâche active", taskCompleted: false },
     { id: 6, nom: "Seulement les tâches terminées.", taskCompleted: false },
-  ])
+])
 
   // const [taskCompleted, setTaskCompleted] = useState(false);
 
@@ -75,9 +75,10 @@ function App() {
   // render
   return (
     <div>
-      <h1>Todo App</h1>
+      <h1>TaskMaster</h1>
       <h2> Tâches à faire : </h2>
       <ul>
+       {/* taskInfo = props ? ou {task} = props */}
         {tasks.map((task) => (
           <Task taskInfo={task}
             onTaskDelete={handleDelete}
