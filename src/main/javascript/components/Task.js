@@ -6,8 +6,6 @@
 // const {taskInfo, onTaskCheck, onTaskDelete} = props
 // passer props en params de la fonction revient au même que de faire le destructuring directement en params de la fonction
 
-import { useState } from "react"
-
     export default function Task({taskInfo, onTaskDelete, onCheck, onTaskCompleted}) {
     return ( 
         <li 
@@ -20,8 +18,9 @@ import { useState } from "react"
             checked={taskInfo.taskCompleted}
             />            
             <button
+                disabled={!onTaskCompleted}
                 className="deleteButton"
-                onClick={() => onTaskDelete(taskInfo.id)}>X</button>
+                onClick={() => onTaskDelete(taskInfo.id)}>Supprimer</button>
         </li>
     )
 }
