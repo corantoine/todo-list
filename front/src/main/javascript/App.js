@@ -3,6 +3,7 @@ import "./styles/app.css"
 import Task from "./components/Task"
 import TaskForm from "./components/TaskForm";
 
+
 function App() {
   // state
   const [tasks, setTasks] = useState([
@@ -75,15 +76,13 @@ function App() {
   // render
   return (
     <div>
-      <h1>TaskMaster</h1>
+      {/* <h1>TaskMaster</h1> */}
       <h2> Tâches à faire : </h2>
       <ul>
-       {/* taskInfo = props ? ou {task} = props */}
         {tasks.map((task) => (
           <Task taskInfo={task}
             onTaskDelete={handleDelete}
             onCheck={handleCheck}
-            onTaskCompleted={task.taskCompleted}
             key={task.id}
           />
         ))}

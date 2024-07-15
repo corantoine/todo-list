@@ -38,6 +38,7 @@ const [newTask, setNewTask] = useState("");
 
 //render
     return(
+      <div className="inputAndButton">
         <form action="submit" onSubmit={handleSubmit}>
         <input className="input" 
           value={newTask}
@@ -45,5 +46,6 @@ const [newTask, setNewTask] = useState("");
           placeholder="Ajoutez une tache..."
           onChange={handleChange} />
         <button className="button">Ajouter</button>
-      </form>)
+      </form>
+      </div>)
 }
